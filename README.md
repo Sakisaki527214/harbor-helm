@@ -1,4 +1,6 @@
 # Change
+## Support Configurable CA Bundle
+
 ```yaml
 # The custom ca bundle, must contain key named "ca.crt"
 # which will be injected into the trust store for core, jobservice, registry, trivy components
@@ -21,6 +23,8 @@ caBundle:
   {{- end -}}
 {{- end -}}
 ```
+## Support Stunnel Sidecar
+TODO
 
 # Helm Chart for Harbor
 
