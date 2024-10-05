@@ -1,3 +1,27 @@
+# Change
+```yaml
+# The custom ca bundle, must contain key named "ca.crt"
+# which will be injected into the trust store for core, jobservice, registry, trivy components
+caBundle:
+  enabled: false  
+  # secret or configmap
+  type: secret 
+  name: ""
+```
+
+```yaml
+{{- define "harbor.caBundleVolume" -}}
+- name: ca-bundle-certs
+  {{- if eq .Values.caBundle.type "secret" -}}
+  secret:
+    secretName: {{ .Values.caBundleName }}
+  {{- else if eq .Values.caBundle.type "configmap"-}}
+  configMap: 
+    name: {{ .Values.caBundleName }}
+  {{- end -}}
+{{- end -}}
+```
+
 # Helm Chart for Harbor
 
 **Notes:** The master branch is in heavy development, please use the other stable versions instead. A highly available solution for Harbor based on chart can be found [here](docs/High%20Availability.md). And refer to the [guide](docs/Upgrade.md) to upgrade the existing deployment.

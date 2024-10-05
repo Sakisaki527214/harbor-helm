@@ -376,9 +376,13 @@ proxy:
 # Run the migration job via helm hook
 enableMigrateHelmHook: false
 
-# The custom ca bundle secret, the secret must contain key named "ca.crt"
+# The custom ca bundle, must contain key named "ca.crt"
 # which will be injected into the trust store for core, jobservice, registry, trivy components
-# caBundleSecretName: ""
+caBundle:
+  enabled: false  
+  # secret or configmap
+  type: secret 
+  name: ""
 
 ## UAA Authentication Options
 # If you're using UAA for authentication behind a self-signed

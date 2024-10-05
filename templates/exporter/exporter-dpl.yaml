@@ -108,7 +108,7 @@ spec:
         ports:
         - containerPort: {{ .Values.metrics.exporter.port }}
         volumeMounts:
-        {{- if .Values.caBundleSecretName }}
+        {{- if .Values.caBundle.enabled }}
 {{ include "harbor.caBundleVolumeMount" . | indent 8 }}
         {{- end }}
         {{- if .Values.internalTLS.enabled }}
@@ -126,7 +126,7 @@ spec:
         secret:
           secretName: {{ template "harbor.internalTLS.core.secretName" . }}
       {{- end }}
-      {{- if .Values.caBundleSecretName }}
+      {{- if .Values.caBundle.enabled }}
 {{ include "harbor.caBundleVolume" . | indent 6 }}
       {{- end }}
     {{- with .Values.exporter.nodeSelector }}

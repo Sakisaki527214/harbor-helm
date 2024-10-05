@@ -144,7 +144,7 @@ spec:
         - name: jobservice-internal-certs
           mountPath: /etc/harbor/ssl/jobservice
         {{- end }}
-        {{- if .Values.caBundleSecretName }}
+        {{- if .Values.caBundle.enabled }}
 {{ include "harbor.caBundleVolumeMount" . | indent 8 }}
         {{- end }}
       volumes:
@@ -163,7 +163,7 @@ spec:
         secret:
           secretName: {{ template "harbor.internalTLS.jobservice.secretName" . }}
       {{- end }}
-      {{- if .Values.caBundleSecretName }}
+      {{- if .Values.caBundle.enabled }}
 {{ include "harbor.caBundleVolume" . | indent 6 }}
       {{- end }}
     {{- with .Values.jobservice.nodeSelector }}

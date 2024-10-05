@@ -207,7 +207,7 @@ spec:
           subPath: pk.pem
         {{- end }}
         {{- end }}
-        {{- if .Values.caBundleSecretName }}
+        {{- if .Values.caBundle.enabled }}
 {{ include "harbor.caBundleVolumeMount" . | indent 8 }}
         {{- end }}
       - name: registryctl
@@ -355,7 +355,7 @@ spec:
           mountPath: /etc/registry/gcs-key.json
           subPath: gcs-key.json
         {{- end }}
-        {{- if .Values.caBundleSecretName }}
+        {{- if .Values.caBundle.enabled }}
 {{ include "harbor.caBundleVolumeMount" . | indent 8 }}
         {{- end }}
       volumes:
@@ -411,7 +411,7 @@ spec:
               path: pk.pem
       {{- end }}
       {{- end }}
-      {{- if .Values.caBundleSecretName }}
+      {{- if .Values.caBundle.enabled }}
 {{ include "harbor.caBundleVolume" . | indent 6 }}
       {{- end }}
     {{- with .Values.registry.nodeSelector }}

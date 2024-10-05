@@ -298,8 +298,13 @@ app: "{{ template "harbor.name" . }}"
 
 {{- define "harbor.caBundleVolume" -}}
 - name: ca-bundle-certs
+  {{- if eq .Values.caBundle.type "secret" -}}
   secret:
-    secretName: {{ .Values.caBundleSecretName }}
+    secretName: {{ .Values.caBundleName }}
+  {{- else if eq .Values.caBundle.type "configmap"-}}
+  configMap: 
+    name: {{ .Values.caBundleName }}
+  {{- end -}}
 {{- end -}}
 
 {{- define "harbor.caBundleVolumeMount" -}}
