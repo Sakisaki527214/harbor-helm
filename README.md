@@ -13,13 +13,14 @@ caBundle:
 
 ```yaml
 {{- define "harbor.caBundleVolume" -}}
-- name: ca-bundle-certs
   {{- if eq .Values.caBundle.type "secret" -}}
+  - name: ca-bundle-certs
   secret:
-    secretName: {{ .Values.caBundleName }}
-  {{- else if eq .Values.caBundle.type "configmap"-}}
+    secretName: {{ .Values.caBundle.name }}
+  {{- else if eq .Values.caBundle.type "configmap" -}}
+  - name: ca-bundle-certs
   configMap: 
-    name: {{ .Values.caBundleName }}
+    name: {{ .Values.caBundle.name }}
   {{- end -}}
 {{- end -}}
 ```
