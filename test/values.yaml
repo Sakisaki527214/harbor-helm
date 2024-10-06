@@ -1,0 +1,98 @@
+caBundle:
+  enabled: true
+  name: root-selfsigned-ca-sync
+  type: configmap
+core:
+  replicas: 2
+database:
+  external:
+    coreDatabase: registry
+    host: 127.0.0.1
+    password: '<psql.kube.password>'
+    port: '5432'
+    username: 'kube'
+  type: external
+expose:
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    className: nginx
+    hosts:
+      core: 'harbor.kube.app'
+  tls:
+    certSource: secret
+    enabled: true
+    secret:
+      secretName: 'harbor-tls'
+  type: ingress
+externalURL: 'https://harbor.kube.app'
+internalTLS:
+  certSource: secret
+  core:
+    crt: tls.crt
+    key: tls.key
+    secretName: 'harbor-core-tls'
+  enabled: true
+  jobservice:
+    crt: tls.crt
+    key: tls.key
+    secretName: 'harbor-jobservice-tls'
+  portal:
+    crt: tls.crt
+    key: tls.key
+    secretName: 'harbor-portal-tls'
+  registry:
+    crt: tls.crt
+    key: tls.key
+    secretName: 'harbor-registry-tls'
+  trivy:
+    crt: tls.crt
+    key: tls.key
+    secretName: 'harbor-trivy-tls'
+jobservice:
+  replicas: 2
+persistence:
+  persistentVolumeClaim:
+    jobservice:
+      jobLog:
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: 'local-path'
+    redis:
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      storageClass: 'local-path'
+    registry:
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      storageClass: 'local-path'
+    trivy:
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      storageClass: 'local-path'
+portal:
+  replicas: 2
+registry:
+  replicas: 2
+sidecar:
+  containers:
+  - command:
+    - /usr/bin/stunnel
+    image: chainguard/stunnel
+    imagePullPolicy: IfNotPresent
+    name: stunnel
+    ports:
+    - adr: 'postgresql.jhg-stack.svc.cluster.local'
+      name: psql
+      port: '5432'
+      targetPort: '5432'
+    volumeMounts:
+    - mountPath: /etc/stunnel/
+      name: stunnel-config
+  enabled: true
+  volumes:
+  - configMap:
+      name: stunnel-config
+    name: stunnel-config
+trivy:
+  replicas: 2
