@@ -25,7 +25,55 @@ caBundle:
 {{- end -}}
 ```
 ## Support Stunnel Sidecar
-TODO
+
+```yaml
+## add sidecar containers for core, jobservice, and trivy
+## like in normal sepc.templates.sepc.containers
+sidecar:
+  enabled: true
+  containers:   
+  ## e.g. add stunnel sidecar
+  # - name: stunnel
+  #   image: chainguard/stunnel
+  #   imagePullPolicy: IfNotPresent
+  #   command: 
+  #     - /usr/bin/stunnel
+  #   ports:
+  #     - name: redis
+  #       adr: redis.default.svc.cluster.local
+  #       port: 6379
+  #       targetPort: 6379
+  #   resources:
+  #     limits:
+  #       cpu: 100m
+  #       memory: 128Mi
+  #       ephemeral-storage: 50Mi
+  #     requests:
+  #       cpu: 100m
+  #       memory: 128Mi
+  #       ephemeral-storage: 10Mi
+  #   volumeMounts:
+  #     - name: stunnel-config
+  #       mountPath: "/etc/stunnel/"
+  # volumes:
+  # - name: stunnel-config
+  #   configMap:
+  #     name: stunnel-config
+```
+
+```yaml
+...
+      containers:
+{{- if .Values.sidecar.enabled }}
+{{ toYaml .Values.sidecar.containers | indent 6 }}
+{{- end }}
+...
+      volumes:
+{{- if .Values.sidecar.enabled }}
+{{ toYaml .Values.sidecar.volumes | indent 6 }}
+{{- end }}
+...
+```
 
 # Helm Chart for Harbor
 

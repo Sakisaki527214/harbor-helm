@@ -63,6 +63,9 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
+{{- if .Values.sidecar.enabled }}
+{{ toYaml .Values.sidecar.containers | indent 6 }}
+{{- end }}
       - name: core
         image: {{ .Values.core.image.repository }}:{{ .Values.core.image.tag }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
@@ -189,6 +192,9 @@ spec:
 {{ toYaml .Values.core.resources | indent 10 }}
 {{- end }}
       volumes:
+{{- if .Values.sidecar.enabled }}
+{{ toYaml .Values.sidecar.volumes | indent 6 }}
+{{- end }}
       - name: config
         configMap:
           name: {{ template "harbor.core" . }}
