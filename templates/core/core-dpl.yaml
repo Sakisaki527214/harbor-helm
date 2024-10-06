@@ -189,10 +189,13 @@ spec:
 {{ toYaml .Values.core.resources | indent 10 }}
 {{- end }}
 {{- if .Values.sidecar.enabled }}
+{{- if not (empty .Values.sidecar.containers) }}
 {{ toYaml .Values.sidecar.containers | indent 6 }}
+{{- end }}
 {{- end }}
       volumes:
 {{- if .Values.sidecar.enabled }}
+{{- if not (empty .Values.sidecar.volumes) }}
 {{ toYaml .Values.sidecar.volumes | indent 6 }}
 {{- end }}
       - name: config
