@@ -62,9 +62,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-{{- if .Values.sidecar.enabled }}
-{{ toYaml .Values.sidecar.containers | indent 6 }}
-{{- end }}
         - name: trivy
           image: {{ .Values.trivy.image.repository }}:{{ .Values.trivy.image.tag }}
           imagePullPolicy: {{ .Values.imagePullPolicy }}
@@ -175,6 +172,9 @@ spec:
           resources:
 {{ toYaml .Values.trivy.resources | indent 12 }}
       {{- if or (or .Values.internalTLS.enabled .Values.caBundle.enabled) (or (not .Values.persistence.enabled) $trivy.existingClaim) }}
+{{- if .Values.sidecar.enabled }}
+{{ toYaml .Values.sidecar.containers | indent 6 }}
+{{- end }}
       volumes:
 {{- if .Values.sidecar.enabled }}
 {{ toYaml .Values.sidecar.volumes | indent 6 }}

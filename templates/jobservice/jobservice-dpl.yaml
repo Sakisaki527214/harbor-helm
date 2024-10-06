@@ -69,9 +69,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-{{- if .Values.sidecar.enabled }}
-{{ toYaml .Values.sidecar.containers | indent 6 }}
-{{- end }}
       - name: jobservice
         image: {{ .Values.jobservice.image.repository }}:{{ .Values.jobservice.image.tag }}
         imagePullPolicy: {{ .Values.imagePullPolicy }}
@@ -150,6 +147,9 @@ spec:
         {{- if .Values.caBundle.enabled }}
 {{ include "harbor.caBundleVolumeMount" . | indent 8 }}
         {{- end }}
+{{- if .Values.sidecar.enabled }}
+{{ toYaml .Values.sidecar.containers | indent 6 }}
+{{- end }}
       volumes:
 {{- if .Values.sidecar.enabled }}
 {{ toYaml .Values.sidecar.volumes | indent 6 }}
