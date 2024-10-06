@@ -24,7 +24,7 @@ caBundle:
   {{- end -}}
 {{- end -}}
 ```
-## Support Stunnel Sidecar
+## Support Sidecar
 
 ```yaml
 ## add sidecar containers for core, jobservice, and trivy
