@@ -148,7 +148,7 @@ spec:
           - name: trivy-internal-certs
             mountPath: /etc/harbor/ssl/trivy
           {{- end }}
-          {{- if .Values.caBundle.enabled }}
+          {{- if .Values.caBundleSecretName }}
 {{ include "harbor.caBundleVolumeMount" . | indent 10 }}
           {{- end }}
           livenessProbe:
@@ -179,15 +179,16 @@ spec:
 {{- end }}
       volumes:
 {{- if .Values.sidecar.enabled }}
-{{- if not (empty .Values.sidecar.volumes) }}
-{{ toYaml .Values.sidecar.volumes | indent 6 }}
+{{- if not (empty .Values.sidecar.containers) }}
+{{ toYaml .Values.sidecar.containers | indent 6 }}
+{{- end }}
 {{- end }}
       {{- if .Values.internalTLS.enabled }}
       - name: trivy-internal-certs
         secret:
           secretName: {{ template "harbor.internalTLS.trivy.secretName" . }}
       {{- end }}
-      {{- if .Values.caBundle.enabled }}
+      {{- if .Values.caBundleSecretName }}
 {{ include "harbor.caBundleVolume" . | indent 6 }}
       {{- end }}
       {{- if not .Values.persistence.enabled }}

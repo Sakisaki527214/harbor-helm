@@ -31,7 +31,7 @@ caBundle:
 ## like in normal sepc.templates.sepc.containers
 sidecar:
   enabled: false
-  containers: {}
+  containers: 1
   ## e.g. add stunnel sidecar
   # - name: stunnel
   #   image: chainguard/stunnel
@@ -55,7 +55,7 @@ sidecar:
   #   volumeMounts:
   #     - name: stunnel-config
   #       mountPath: "/etc/stunnel/"
-  volumes: {}
+  volumes: 1
   # - name: stunnel-config
   #   configMap:
   #     name: stunnel-config
