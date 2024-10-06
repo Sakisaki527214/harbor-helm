@@ -30,8 +30,8 @@ caBundle:
 ## add sidecar containers for core, jobservice, and trivy
 ## like in normal sepc.templates.sepc.containers
 sidecar:
-  enabled: true
-  containers:   
+  enabled: false
+  containers: {}
   ## e.g. add stunnel sidecar
   # - name: stunnel
   #   image: chainguard/stunnel
@@ -55,7 +55,7 @@ sidecar:
   #   volumeMounts:
   #     - name: stunnel-config
   #       mountPath: "/etc/stunnel/"
-  # volumes:
+  volumes: {}
   # - name: stunnel-config
   #   configMap:
   #     name: stunnel-config
