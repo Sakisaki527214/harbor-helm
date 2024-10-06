@@ -148,11 +148,15 @@ spec:
 {{ include "harbor.caBundleVolumeMount" . | indent 8 }}
         {{- end }}
 {{- if .Values.sidecar.enabled }}
+{{- if .Values.sidecar.containers }}
 {{ toYaml .Values.sidecar.containers | indent 6 }}
+{{- end }}
 {{- end }}
       volumes:
 {{- if .Values.sidecar.enabled }}
+{{- if .Values.sidecar.volumes }}
 {{ toYaml .Values.sidecar.volumes | indent 6 }}
+{{- end }}
 {{- end }}
       - name: jobservice-config
         configMap:
