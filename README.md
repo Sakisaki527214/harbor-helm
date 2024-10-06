@@ -64,6 +64,7 @@ sidecar:
 ```yaml
 ...
       containers:
+      ...
 {{- if .Values.sidecar.enabled }}
 {{ toYaml .Values.sidecar.containers | indent 6 }}
 {{- end }}

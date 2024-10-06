@@ -486,7 +486,7 @@ containerSecurityContext:
 ## add sidecar containers for core, jobservice, and trivy
 ## like in normal sepc.templates.sepc.containers
 sidecar:
-  enabled: true
+  enabled: false
   containers: {} 
   ## e.g. add stunnel sidecar
   # - name: stunnel
