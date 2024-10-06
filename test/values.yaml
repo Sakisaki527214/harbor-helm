@@ -82,10 +82,9 @@ sidecar:
     imagePullPolicy: IfNotPresent
     name: stunnel
     ports:
-    - adr: 'postgresql.jhg-stack.svc.cluster.local'
-      name: psql
-      port: '5432'
-      targetPort: '5432'
+    - name: psql
+      containerPort: 5432
+      protocol: TCP
     volumeMounts:
     - mountPath: /etc/stunnel/
       name: stunnel-config

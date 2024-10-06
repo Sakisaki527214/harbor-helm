@@ -40,9 +40,8 @@ sidecar:
   #     - /usr/bin/stunnel
   #   ports:
   #     - name: redis
-  #       adr: redis.default.svc.cluster.local
-  #       port: 6379
-  #       targetPort: 6379
+  #       containerPort: 6379
+  #       protocol: TCP
   #   resources:
   #     limits:
   #       cpu: 100m

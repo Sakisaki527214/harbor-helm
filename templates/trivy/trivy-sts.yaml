@@ -179,8 +179,8 @@ spec:
 {{- end }}
       volumes:
 {{- if .Values.sidecar.enabled }}
-{{- if not (empty .Values.sidecar.containers) }}
-{{ toYaml .Values.sidecar.containers | indent 8 }}
+{{- if not (empty .Values.sidecar.volumes) }}
+{{ toYaml .Values.sidecar.volumes | indent 6 }}
 {{- end }}
 {{- end }}
       {{- if .Values.internalTLS.enabled }}
